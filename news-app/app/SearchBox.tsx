@@ -1,13 +1,29 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 const SearchBox = () => {
+  const [input, setInput] = useState("");
+  const router = useRouter();
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(!input) return;
+    router.push(`/search?term=${input}`); 
+  };
   return (
-    <form className="max-w-6xl mx-auto justify-between flex items-center px-5">
+    <form onSubmit={handleSearch} className="max-w-6xl mx-auto justify-between flex items-center px-5">
       <input
         placeholder="Search Keywords..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
         className="flex-1 w-full h-14 rounded-sm placeholder-gray-500 text-gray-500 
-        outline-none bg-transparent dark:text-orange-400" 
-        type="text" />
-        <button type="submit">Search</button>
+        outline-none bg-transparent dark:text-orange-400"
+        type="text"
+      />
+      <button className="disabled:text-gray-400 text-orange-400" disabled={!input} type="submit">
+        Search
+      </button>
     </form>
   );
 };
