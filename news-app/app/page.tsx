@@ -3,7 +3,11 @@ import { category } from '../constants';
 import fetchNews from '../lib/fetchNews';
 
 async function Homepage() {
-  /* const news : NewsResponse = await fetchNews (category.join(',')); */
+  const news : NewsResponse = await fetchNews(category?.join(',')); 
+  console.log(news);
+  
+  
+  
   return (
     <div>
       {/* newslist news */}

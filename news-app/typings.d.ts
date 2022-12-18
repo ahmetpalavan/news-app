@@ -1,6 +1,6 @@
 /** @format */
 
-type AhmetArticle  = {
+type Article  = {
   author: string | null;
   category: string;
   country: string;
@@ -21,8 +21,8 @@ type Pagination = {
 };
 
 type NewsResponse = {
-  pagination: { Pagination };
-  data: AhmetArticle[]; 
+  pagination:  Pagination ;
+  data: Article[]; 
 };
 
 type Category = "general" | "business" | "entertainment" | "health" | "science" | "sports" | "technology";
