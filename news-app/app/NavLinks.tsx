@@ -1,6 +1,6 @@
 "use client"
 
-import { category } from "../constants"
+import { categories } from "../constants"
 import {usePathname} from 'next/navigation'
 import NavLink from "./NavLink"
 
@@ -15,14 +15,16 @@ const NavLinks = () => {
     <nav className="grid grid-cols-4 text-xs md:grid-cols-7
     gap-4 pb-10 border-b max-w-6xl mx-auto
     ">
-      {category.map((cat)=>( 
+      {categories.map((category)=>( 
         <NavLink 
-          key={cat} 
-          category={cat} 
-          isActive={isActive(cat)} /> 
+          key={category} 
+          category={category} 
+          isActive={isActive(category)} /> 
       ))}
     </nav>
   )
 }
 
 export default NavLinks
+
+

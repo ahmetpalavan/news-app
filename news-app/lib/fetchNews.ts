@@ -7,16 +7,16 @@ const fetchNews = async (
     isDynamic?: boolean,
 ) => {
     const query = gql`
-    query MyQuery(
+        query MyQuery(
+        $access_key: String!,
         $categories: String!,
         $keywords: String,
-        $access_key: String!,
     ) {
-        MyQuery(
+        myQuery(
             categories: $categories,
             keywords: $keywords,
             access_key: $access_key,
-            countries: "gb,us,tr",
+            countries: "gb",
             sort:"published_desc",
         ) {
             data {
@@ -38,8 +38,9 @@ const fetchNews = async (
                 total
             }
     }
+    }
     `;
-    const res = await fetch("https://baishishan.stepzen.net/api/looping-moose/__graphql ", {
+    const res = await fetch("https://baishishan.stepzen.net/api/sweet-mink/__graphql", {
         method: "POST",
         cache: isDynamic ? "no-cache" : "default",
         next: isDynamic ? {revalidate:0} : {revalidate: 20},
@@ -50,9 +51,9 @@ const fetchNews = async (
         body: JSON.stringify({
             query,
             variables: {
+                access_key: process.env.MEDIASTACK_API_KEY,
                 categories: category,
                 keywords: keywords,
-                access_key: process.env.MEDIASTACK_API_KEY,
             }
         }),
     });
@@ -61,9 +62,9 @@ const fetchNews = async (
         category,
         keywords
     );
-    const newRes = await res.json();
+    const newsResponse = await res.json();
 
-    const news = sortNewsByImage(newRes?.data?.MyQuery);
+    const news = sortNewsByImage(newsResponse?.data?.myQuery);
     return news;
 };
 

@@ -1,4 +1,4 @@
-export const category: Category[] = [
+export const categories: Category[] = [
     "general",
     "business",
     "entertainment",

@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: curl_import_config
+      authentication_4be327152c: baishishan::stepzen.net+1000::d83c64e9480ffb500aa00b804d2d0ad346f1c8e469beb9d47194bec3f7828154
