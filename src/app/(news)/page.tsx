@@ -51,11 +51,9 @@ const NewsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
         </div>
       </div>
       <div>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8'>
-          <Suspense key={Date.now()} fallback={<Loader />}>
-            <NewsFeed initialArticles={articles} />
-          </Suspense>
-        </div>
+        <Suspense key={Date.now()} fallback={<Loader />}>
+          <NewsFeed initialArticles={articles} />
+        </Suspense>
       </div>
     </>
   );

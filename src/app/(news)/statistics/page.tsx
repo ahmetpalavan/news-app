@@ -58,6 +58,7 @@ const StatisticsPage = async ({ searchParams }: { searchParams: SearchParams }) 
           <NewsSourceSelect selectedSource={selectedSource} />
         </div>
       </div>
+      <h2 className='text-xl font-bold mt-4'>Statistics Overview</h2> {/* Added Title */}
       <div className='mt-6'>
         <Suspense fallback={<Loader />}>
           <Chart data={formattedData()} />

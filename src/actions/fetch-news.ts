@@ -28,29 +28,47 @@ export interface NewsApiResponse {
 export const fetchNews = async (
   source: string = 'bitcoin',
   sortBy: string = 'publishedAt',
-  fromDate?: string
+  fromDate?: string,
+  page: number = 1
 ): Promise<NewsArticleProps[]> => {
   const apiKey = process.env.NEWS_API_KEY;
-  const pageSize = 100;
+  const pageSize = 20;
 
-  const response = await axiosInstance.get<NewsApiResponse>('/everything', {
-    params: {
-      q: source,
-      apiKey: apiKey,
-      language: 'en',
-      sortBy: sortBy,
-      pageSize: pageSize,
-      page: 1,
-      ...(fromDate && { from: fromDate }),
-    },
-  });
+  try {
+    const response = await axiosInstance.get<NewsApiResponse>('/everything', {
+      params: {
+        q: source,
+        apiKey,
+        language: 'en',
+        sortBy,
+        pageSize,
+        page,
+        ...(fromDate && { from: fromDate }),
+      },
+    });
 
-  const articles = response.data.articles
-    .map((article) => ({
-      ...article,
-      id: article.url,
-    }))
-    .filter((article) => article.title && article.title !== '[Removed]' && article.content && article.content !== '[Removed]');
+    const articles = response.data.articles
+      .map((article) => ({
+        ...article,
+        id: article.url,
+      }))
+      .filter(
+        (article) =>
+          article.title &&
+          article.title !== '[Removed]' &&
+          article.content &&
+          article.content !== '[Removed]' &&
+          article.urlToImage &&
+          !article.urlToImage.includes('biztoc')
+      );
 
-  return articles;
+    return articles;
+  } catch (error: any) {
+    if (error.response?.status === 429) {
+      console.warn(error.response.data);
+      return [];
+    }
+
+    throw error;
+  }
 };

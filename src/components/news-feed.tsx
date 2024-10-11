@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { NewsArticleProps, fetchNews } from '~/actions/fetch-news';
-import NewsArticle from './news-article';
 import { InfiniteScrollList } from './infinite-scroll';
+import NewsArticle from './news-article';
 
 type NewsFeedProps = {
   initialArticles: NewsArticleProps[];
@@ -11,14 +11,29 @@ type NewsFeedProps = {
 
 export const NewsFeed: React.FC<NewsFeedProps> = ({ initialArticles }) => {
   const [articles, setArticles] = useState<NewsArticleProps[]>(initialArticles);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchMore = async ({ cursor }: { cursor?: any }) => {
-    const nextPage = cursor ? articles.findIndex((article) => article.id === cursor) + 1 : 1;
-    const newArticles = await fetchNews('bitcoin', nextPage.toString());
-    return newArticles;
+  const fetchMore = async ({ cursor }: { cursor?: any }): Promise<NewsArticleProps[]> => {
+    const nextPage = Math.floor(articles.length / 20) + 1;
+    try {
+      const newArticles = await fetchNews('bitcoin', 'publishedAt', undefined, nextPage);
+      return newArticles;
+    } catch (err: any) {
+      if (err.response?.status === 429) {
+        setError(error);
+      } else {
+        setError('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      }
+      return [];
+    }
   };
 
   const renderItem = (item: NewsArticleProps) => <NewsArticle key={item.id} {...item} />;
 
-  return <InfiniteScrollList items={articles} setItems={setArticles} fetchMore={fetchMore} renderItem={renderItem} />;
+  return (
+    <>
+      {error && <div className='text-red-500'>{error}</div>}
+      <InfiniteScrollList skeletonCount={3} items={articles} setItems={setArticles} fetchMore={fetchMore} renderItem={renderItem} />
+    </>
+  );
 };
