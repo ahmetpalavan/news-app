@@ -1,9 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { fetchNews } from '~/actions/fetch-news';
-import Fallback from '~/components/error-component';
 import { Loader } from '~/components/loader';
 import { NewsFeed } from '~/components/news-feed';
 import { RefreshButton } from '~/components/refresh-button';
