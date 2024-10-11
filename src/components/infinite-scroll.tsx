@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { SearchIllustrationIcon } from './icons/search-illustrations';
 
 type Props<T extends { id: any }> = {
   items: T[];
@@ -10,13 +11,15 @@ type Props<T extends { id: any }> = {
 
 export const InfiniteScrollList = <T extends { id: any }>({ items, setItems, fetchMore, renderItem }: Props<T>) => {
   const [cursor, setCursor] = useState(items.at(-1)?.id);
-
   const [hasMoreData, setHasMoreData] = useState(true);
 
   const loadMore = async () => {
-    const newItems = await fetchMore({
-      cursor,
-    });
+    if (items.length >= 100) {
+      setHasMoreData(false);
+      return;
+    }
+
+    const newItems = await fetchMore({ cursor });
 
     if (newItems.length === 0) {
       setHasMoreData(false);
@@ -36,5 +39,20 @@ export const InfiniteScrollList = <T extends { id: any }>({ items, setItems, fet
     },
   });
 
-  return <>{items.map((item) => renderItem(item))}</>;
+  return (
+    <>
+      {items.map((item) => renderItem(item))}
+
+      {hasMoreData ? (
+        <div ref={scrollTrigger} className='text-center pb-20'>
+          Loading...
+        </div>
+      ) : (
+        <div className='flex flex-col items-center justify-center py-20'>
+          <SearchIllustrationIcon className='max-w-48 w-full' />
+          <div className='opacity-70'>Haber akışının sonuna ulaştınız!</div>
+        </div>
+      )}
+    </>
+  );
 };

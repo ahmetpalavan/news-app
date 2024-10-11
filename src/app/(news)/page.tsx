@@ -1,6 +1,9 @@
+import { QueryClient } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { fetchNews } from '~/actions/fetch-news';
+import Fallback from '~/components/error-component';
 import { Loader } from '~/components/loader';
 import { NewsFeed } from '~/components/news-feed';
 import { RefreshButton } from '~/components/refresh-button';
@@ -19,6 +22,7 @@ const validSources = ['bitcoin', 'apple', 'tesla'];
 const validSortBy = ['popularity', 'publishedAt', 'relevancy'];
 
 const NewsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const queryClient = new QueryClient();
   const orderBy = searchParams?.sortBy ?? 'publishedAt';
   const selectedSource = searchParams?.source ?? 'bitcoin';
   const fromDate = searchParams?.from;
@@ -31,7 +35,10 @@ const NewsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
     return notFound();
   }
 
-  const articles = await fetchNews(selectedSource, orderBy, fromDate);
+  const articles = await queryClient.fetchQuery({
+    queryKey: ['news', { source: selectedSource, sortBy: orderBy, from: fromDate }],
+    queryFn: () => fetchNews(selectedSource, orderBy, fromDate),
+  });
 
   return (
     <>
@@ -46,7 +53,7 @@ const NewsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
         </div>
       </div>
       <div>
-        <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8'>
           <Suspense key={Date.now()} fallback={<Loader />}>
             <NewsFeed initialArticles={articles} />
           </Suspense>
