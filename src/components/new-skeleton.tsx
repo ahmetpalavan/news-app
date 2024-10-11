@@ -24,3 +24,5 @@ export const NewSkeleton = forwardRef<HTMLDivElement>((_, ref) => {
     </Card>
   );
 });
+
+NewSkeleton.displayName = 'NewSkeleton';

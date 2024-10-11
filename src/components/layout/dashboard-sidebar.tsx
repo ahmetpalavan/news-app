@@ -1,6 +1,6 @@
 'use client';
 
-import { ChartArea, Component, Menu, Newspaper, User } from 'lucide-react';
+import { ChartArea, Menu, Newspaper, User } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { cn, PropsWithClassName } from '~/lib/utils';

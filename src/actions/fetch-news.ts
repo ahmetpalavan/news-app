@@ -25,6 +25,17 @@ export interface NewsApiResponse {
   articles: NewsArticleProps[];
 }
 
+interface FetchNewsParams {
+  apiKey?: string;
+  language: string;
+  sortBy: string;
+  pageSize: number;
+  page: number;
+  q?: string;
+  domains?: string;
+  from?: string;
+}
+
 export const fetchNews = async (
   source: string = 'bitcoin',
   sortBy: string = 'publishedAt',
@@ -35,17 +46,22 @@ export const fetchNews = async (
   const pageSize = 20;
 
   try {
-    const response = await axiosInstance.get<NewsApiResponse>('/everything', {
-      params: {
-        q: source,
-        apiKey,
-        language: 'en',
-        sortBy,
-        pageSize,
-        page,
-        ...(fromDate && { from: fromDate }),
-      },
-    });
+    const params: FetchNewsParams = {
+      apiKey,
+      language: 'en',
+      sortBy,
+      pageSize,
+      page,
+      ...(fromDate && { from: fromDate }),
+    };
+
+    if (source === 'tech') {
+      params.domains = 'techcrunch.com,thenextweb.com';
+    } else {
+      params.q = source;
+    }
+
+    const response = await axiosInstance.get<NewsApiResponse>('/everything', { params });
 
     const articles = response.data.articles
       .map((article) => ({

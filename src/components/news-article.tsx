@@ -24,7 +24,7 @@ const NewsArticle = ({ source, author, title, description, url, urlToImage, publ
   }
 
   return (
-    <Card className='max-w-full sm:max-w-md lg:max-w-lg mx-auto my-6 shadow-md overflow-hidden flex flex-col'>
+    <Card className='max-w-full transition-transform duration-300 transform hover:scale-105 sm:max-w-md lg:max-w-lg mx-auto my-6 shadow-md overflow-hidden flex flex-col'>
       {!isRemoved(urlToImage) && urlToImage && <img className='w-full h-48 sm:h-64 md:h-72 object-cover' src={urlToImage} alt={title} />}
       <CardContent className='flex-1 flex flex-col'>
         <CardHeader className='flex flex-col'>

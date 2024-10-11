@@ -15,7 +15,7 @@ interface SearchParams {
   from?: string;
 }
 
-const validSources = ['bitcoin', 'apple', 'tesla'];
+const validSources = ['bitcoin', 'apple', 'tesla', 'tech'];
 const validSortBy = ['popularity', 'publishedAt', 'relevancy'];
 
 const StatisticsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
@@ -58,7 +58,7 @@ const StatisticsPage = async ({ searchParams }: { searchParams: SearchParams }) 
           <NewsSourceSelect selectedSource={selectedSource} />
         </div>
       </div>
-      <h2 className='text-xl font-bold mt-4'>Statistics Overview</h2> {/* Added Title */}
+      <h2 className='text-xl font-bold mt-4'>{selectedSource.charAt(0).toUpperCase() + selectedSource.slice(1)} News Statistics</h2>
       <div className='mt-6'>
         <Suspense fallback={<Loader />}>
           <Chart data={formattedData()} />

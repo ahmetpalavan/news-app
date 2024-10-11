@@ -1,5 +1,6 @@
 'use client';
 
+import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -7,12 +8,15 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     console.error(error);
   }, [error]);
 
-  const isTooManyRequests = error.message.includes('429');
-
   return (
-    <div>
-      <h2>{isTooManyRequests ? 'Çok fazla istek attınız. Lütfen daha sonra tekrar deneyin.' : 'Something went wrong!'}</h2>
-      <button onClick={() => reset()}>Try again</button>
-    </div>
+    <main className='flex h-full flex-col items-center justify-center'>
+      <h2 className='text-center'>Something went wrong!</h2>
+      <button
+        className='mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400'
+        onClick={() => reset()}
+      >
+        Try again
+      </button>
+    </main>
   );
 }

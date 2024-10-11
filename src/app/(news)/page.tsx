@@ -16,7 +16,7 @@ interface SearchParams {
   from?: string;
 }
 
-const validSources = ['bitcoin', 'apple', 'tesla'];
+const validSources = ['bitcoin', 'apple', 'tesla', 'tech'];
 const validSortBy = ['popularity', 'publishedAt', 'relevancy'];
 
 const NewsPage = async ({ searchParams }: { searchParams: SearchParams }) => {

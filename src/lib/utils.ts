@@ -5,4 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export type PropsWithClassName<T extends object = {}> = T & { className?: string };
+export type PropsWithClassName<T = unknown> = T & { className?: string };

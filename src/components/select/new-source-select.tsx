@@ -12,6 +12,7 @@ const newsSources = [
   { id: 'bitcoin', name: 'Bitcoin' },
   { id: 'apple', name: 'Apple' },
   { id: 'tesla', name: 'Tesla' },
+  { id: 'tech', name: 'TechCrunch & The Next Web' },
 ];
 
 export const NewsSourceSelect = ({ selectedSource }: Props) => {
@@ -27,6 +28,12 @@ export const NewsSourceSelect = ({ selectedSource }: Props) => {
         newSearchParams.set('source', value);
       } else {
         newSearchParams.delete('source');
+      }
+
+      if (value === 'tech') {
+        newSearchParams.set('domains', encodeURIComponent('techcrunch.com,thenextweb.com'));
+      } else {
+        newSearchParams.delete('domains');
       }
 
       router.replace(`${pathname}?${newSearchParams.toString()}`);

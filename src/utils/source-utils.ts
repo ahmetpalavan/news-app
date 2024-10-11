@@ -1,1 +1,1 @@
-export type Source = 'bitcoin' | 'apple' | 'tesla';
+export type Source = 'bitcoin' | 'apple' | 'tesla' | 'tech';

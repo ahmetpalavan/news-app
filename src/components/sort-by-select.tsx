@@ -19,14 +19,18 @@ export const QuestionsSortBySelect = ({ sortBy }: Props) => {
   const handleValueChange = useCallback(
     (value: SortBy) => {
       const newSearchParams = new URLSearchParams(searchParams);
+
       const orderBy = match(value)
-        .returnType<SortBy | undefined>()
         .with('popularity', () => 'popularity')
         .with('publishedAt', () => 'publishedAt')
         .with('relevancy', () => 'relevancy')
         .otherwise(() => undefined);
 
-      orderBy ? newSearchParams.set(questionPageQueryParams.sortBy, orderBy) : newSearchParams.delete(questionPageQueryParams.sortBy);
+      if (orderBy) {
+        newSearchParams.set(questionPageQueryParams.sortBy, orderBy);
+      } else {
+        newSearchParams.delete(questionPageQueryParams.sortBy);
+      }
 
       router.replace(`${pathname}?${newSearchParams.toString()}`);
     },

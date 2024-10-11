@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NewsArticleProps, fetchNews } from '~/actions/fetch-news';
 import { InfiniteScrollList } from './infinite-scroll';
 import NewsArticle from './news-article';
@@ -9,11 +9,11 @@ type NewsFeedProps = {
   initialArticles: NewsArticleProps[];
 };
 
-export const NewsFeed: React.FC<NewsFeedProps> = ({ initialArticles }) => {
+export const NewsFeed = ({ initialArticles }: NewsFeedProps) => {
   const [articles, setArticles] = useState<NewsArticleProps[]>(initialArticles);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMore = async ({ cursor }: { cursor?: any }): Promise<NewsArticleProps[]> => {
+  const fetchMore = async (): Promise<NewsArticleProps[]> => {
     const nextPage = Math.floor(articles.length / 20) + 1;
     try {
       const newArticles = await fetchNews('bitcoin', 'publishedAt', undefined, nextPage);
