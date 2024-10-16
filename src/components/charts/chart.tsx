@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader } from '../ui/card';
 import StatisticsAreaChart from './area-variant';
 import StatisticsChart from './bar-variant';
 import StatisticsLineChart from './line-variant';
+import CountUp from 'react-countup';
 
 type Props = {
   data: { hour: string; count: number }[];
@@ -18,6 +19,8 @@ export const Chart: React.FC<Props> = ({ data = [] }) => {
   const onTypeChange = useCallback((value: 'line' | 'area' | 'bar') => {
     setChartType(value);
   }, []);
+
+  const totalCount = data.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <Card className='border-none drop-shadow-sm'>
@@ -49,6 +52,11 @@ export const Chart: React.FC<Props> = ({ data = [] }) => {
         </Select>
       </CardHeader>
       <CardContent>
+        <div className='text-center mb-4'>
+          <h2 className='text-lg font-semibold'>Total Count</h2>
+          <CountUp preserveValue end={totalCount} start={0} />
+        </div>
+
         <>
           {chartType === 'area' && <StatisticsAreaChart data={data} />}
           {chartType === 'bar' && <StatisticsChart data={data} />}
