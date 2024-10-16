@@ -1,11 +1,13 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getHours } from 'date-fns';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { fetchNews } from '~/actions/fetch-news';
 import { Chart } from '~/components/charts/chart';
 import { Loader } from '~/components/loader';
 import { NewsSourceSelect } from '~/components/select/new-source-select';
+import { capitalizeFirstLetter } from '~/utils/helpers';
 import { SortBy } from '~/utils/sort-utils';
 import { Source } from '~/utils/source-utils';
 
@@ -17,6 +19,18 @@ interface SearchParams {
 
 const validSources = ['bitcoin', 'apple', 'tesla', 'tech'];
 const validSortBy = ['popularity', 'publishedAt', 'relevancy'];
+
+export const generateMetadata = async ({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> => {
+  const title = `Statistics - ${capitalizeFirstLetter(searchParams.source ?? 'Bitcoin')}`;
+
+  return {
+    title,
+    twitter: {
+      title,
+      card: 'summary_large_image',
+    },
+  };
+};
 
 const StatisticsPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   const queryClient = new QueryClient();
