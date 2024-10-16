@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# News App
 
-## Getting Started
+News App is a web application that provides users with the latest news from various sources. This project is designed to offer real-time news updates with an interactive and customizable interface, allowing users to filter news by category and visualize data through charts.
 
-First, run the development server:
+## Project Features
+
+- **Real-Time News Updates**: Fetch the latest news from multiple sources.
+- **News Filtering**: Filter news articles by category, source, and other criteria.
+- **Interactive Charts**: Visualize news trends over time with area, bar, and line charts.
+- **Customizable UI Components**: Leverages Radix UI for a responsive and accessible interface.
+- **Responsive Design**: Optimized for mobile and desktop experiences.
+
+## Technologies Used
+
+- **Next.js**: Framework
+- **TypeScript**: Programming Language
+- **TanStack Query (React Query)**: Data fetching, caching, and updating
+- **Axios**: API requests
+- **Date-fns**: Date and time handling
+- **Tailwind CSS**: Styling
+- **ShadCN UI**: UI Components
+- **Recharts**: Charts
+- **Radix UI**: Accessible UI components
+
+## Installation and Setup
+
+Follow the steps below to run the project locally.
+
+### Install Dependencies
+
+First, install the necessary dependencies:
+
+```bash
+npm install
+
+```
+
+### Start Development Server
+
+To run the application locally:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This command will start the development server and open the application in your browser at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To build the application for production:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Commands
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **dev**: Starts the development server.
+- **build**: Builds the application for production.
+- **start**: Starts the application in production mode.
+- **lint**: Runs ESLint to check the code.
