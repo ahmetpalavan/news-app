@@ -19,11 +19,6 @@ const sidebarItems = [
     route: '/statistics',
     Icon: ChartArea,
   },
-  {
-    name: 'Account',
-    route: '/account',
-    Icon: User,
-  },
 ] as const;
 
 export const DesktopDashboardSidebar = ({ className }: PropsWithClassName) => {
